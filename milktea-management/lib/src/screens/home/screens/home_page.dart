@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:ltdidong2/src/data/history.dart';
@@ -19,10 +20,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _StateHomePage extends State<HomePage> {
+  void getTest() async {
+    await Dio()
+        .get('http://192.168.1.14:3000/api/post')
+        .then((value) => {print(value)})
+        .catchError((err) => {print(err)});
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    getTest();
   }
 
   @override
