@@ -43,6 +43,9 @@ class _AppViewState extends State<AppView> {
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         );
       },
+      theme: ThemeData(
+        scaffoldBackgroundColor: Color(0xFFF5F5F3),
+      ),
       initialRoute: '/',
       onGenerateRoute: _route.generateRoute,
       debugShowCheckedModeBanner: false,
