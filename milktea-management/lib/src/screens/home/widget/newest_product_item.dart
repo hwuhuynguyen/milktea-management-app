@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:ltdidong2/src/data/models/product.dart';
+import 'package:ltdidong2/src/utlis/format.dart';
 
 class NewestProductItem extends StatefulWidget {
-  const NewestProductItem({Key? key}) : super(key: key);
+  final Product product;
+
+  const NewestProductItem({required this.product, Key? key}) : super(key: key);
 
   @override
   _NewestProductItemState createState() => _NewestProductItemState();
@@ -14,7 +18,7 @@ class _NewestProductItemState extends State<NewestProductItem> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Container(
-        height: 150,
+        height: 175,
         width: MediaQuery.of(context).size.width - 50,
         decoration: BoxDecoration(
             color: Colors.white,
@@ -31,12 +35,16 @@ class _NewestProductItemState extends State<NewestProductItem> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Center(
-                  child: Image.network(
-                      height: 120,
-                      width: 150,
-                      "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
-                ),
+                Container(
+                    width: 150,
+                    height: 130,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Image.network(
+                          fit: BoxFit.cover,
+                          widget.product.image ??
+                              "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
+                    )),
                 Container(
                   width: 180,
                   child: Column(
@@ -46,20 +54,20 @@ class _NewestProductItemState extends State<NewestProductItem> {
                       const SizedBox(
                         height: 5,
                       ),
-                      const Flexible(
+                      Flexible(
                           child: Text(
-                        "Trà sữa",
+                        widget.product.name!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 22),
                       )),
-                      const Flexible(
+                      Flexible(
                           child: Text(
-                        "Trà sữa thơm ngon uống vào ngây ngất",
+                        widget.product.description!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       )),
                       RatingBar(
                         initialRating: 4,
@@ -86,15 +94,15 @@ class _NewestProductItemState extends State<NewestProductItem> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
-                            "\$10",
-                            style: TextStyle(
+                            "\$ ${FormatValidator().formatPrice(widget.product.price!.toString())}",
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17,
                                 color: Colors.red),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(right: 8),
                             child: Icon(Icons.shopping_cart_outlined,
                                 size: 20, color: Colors.red),

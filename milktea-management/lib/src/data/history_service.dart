@@ -37,7 +37,6 @@ class HistoryService {
     ''');
     });
     dynamic test = await _database.query('item_data');
-    print(test);
   }
 
   Future<List<History>> searchItem(int quantity) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/product_service.dart';
 import 'package:ltdidong2/src/screens/home/widget/newest_product_item.dart';
 import 'package:ltdidong2/src/screens/home/widget/popular_product_item.dart';
 import 'package:ltdidong2/src/screens/home/widget/product_category_item.dart';
@@ -20,7 +21,10 @@ class _NewestListWidgetState extends State<NewestListWidget> {
           horizontal: 10,
         ),
         child: Column(
-          children: [for (int i = 0; i < 10; i++) NewestProductItem()],
+          children: [
+            for (int i = 0; i < ProductService().dataProductNewest.length; i++)
+              NewestProductItem(product: ProductService().dataProductNewest[i])
+          ],
         ),
       ),
     );

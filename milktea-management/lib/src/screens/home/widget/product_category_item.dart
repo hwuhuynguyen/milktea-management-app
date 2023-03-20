@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/models/product.dart';
 
 class ProductItem extends StatefulWidget {
-  const ProductItem({Key? key}) : super(key: key);
+  final Product product;
+  const ProductItem({required this.product, Key? key}) : super(key: key);
 
   @override
   _ProductItemState createState() => _ProductItemState();
@@ -31,7 +33,8 @@ class _ProductItemState extends State<ProductItem> {
         child: Image.network(
             width: 50,
             height: 50,
-            "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
+            widget.product.image ??
+                "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
       ),
     );
   }

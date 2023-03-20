@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/models/product.dart';
+import 'package:ltdidong2/src/utlis/format.dart';
 
 class PopularProductItem extends StatefulWidget {
-  const PopularProductItem({Key? key}) : super(key: key);
+  final Product product;
+
+  const PopularProductItem({required this.product, Key? key}) : super(key: key);
 
   @override
   _PopularProductItemState createState() => _PopularProductItemState();
@@ -16,7 +20,7 @@ class _PopularProductItemState extends State<PopularProductItem> {
       ),
       child: Container(
           width: 170,
-          height: 230,
+          height: 283,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
@@ -35,37 +39,39 @@ class _PopularProductItemState extends State<PopularProductItem> {
                 Center(
                   child: Image.network(
                       height: 130,
-                      "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
+                      widget.product.image ??
+                          "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
                 ),
                 SizedBox(height: 10),
-                const Flexible(
+                Flexible(
                     child: Text(
-                  "Trà sữa",
+                  widget.product.name!,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 )),
                 const SizedBox(height: 10),
-                const Flexible(
+                Flexible(
                   child: Text(
-                    "Trà sữa ngon",
+                    widget.product.description!,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+                    maxLines: 3,
                     style: TextStyle(fontSize: 15),
                   ),
                 ),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
-                      "\$10",
-                      style: TextStyle(
+                      "\$ ${FormatValidator().formatPrice(widget.product.price!.toString())}",
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
                           color: Colors.red),
                     ),
-                    Icon(Icons.favorite_border, size: 16, color: Colors.red)
+                    const Icon(Icons.favorite_border,
+                        size: 16, color: Colors.red)
                   ],
                 )
               ],

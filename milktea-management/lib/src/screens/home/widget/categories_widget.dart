@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/product_service.dart';
 import 'package:ltdidong2/src/screens/home/widget/product_category_item.dart';
 
 class CategoriesWidget extends StatefulWidget {
@@ -20,7 +21,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         ),
         child: Row(
           children: [
-            for (int i = 0; i < 10; i++) ProductItem(),
+            for (int i = 0; i < ProductService().dataProduct.length; i++)
+              ProductItem(product: ProductService().dataProduct[i]),
           ],
         ),
       ),

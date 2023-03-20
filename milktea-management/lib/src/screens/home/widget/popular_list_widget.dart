@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/product_service.dart';
 import 'package:ltdidong2/src/screens/home/widget/popular_product_item.dart';
 import 'package:ltdidong2/src/screens/home/widget/product_category_item.dart';
 
@@ -21,7 +22,9 @@ class _PopularListWidgetState extends State<PopularListWidget> {
         ),
         child: Row(
           children: [
-            for (int i = 0; i < 10; i++) PopularProductItem(),
+            for (int i = 0; i < ProductService().dataProductPopular.length; i++)
+              PopularProductItem(
+                  product: ProductService().dataProductPopular[i]),
           ],
         ),
       ),
