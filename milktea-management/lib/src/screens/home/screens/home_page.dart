@@ -11,6 +11,7 @@ import 'package:ltdidong2/src/screens/home/widget/popular_list_widget.dart';
 import 'package:ltdidong2/src/widgets/LoadingScreen.dart';
 import 'package:ltdidong2/src/widgets/app_bar_widget.dart';
 import 'package:ltdidong2/src/screens/home/widget/categories_widget.dart';
+import 'package:ltdidong2/src/widgets/drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,6 +44,7 @@ class _StateHomePage extends State<HomePage> {
         ? LoadingScreen()
         : KeyboardDismisser(
             child: Scaffold(
+                drawer: DrawerWidget(),
                 floatingActionButton: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -55,7 +57,9 @@ class _StateHomePage extends State<HomePage> {
                           )
                         ]),
                     child: FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/cart");
+                      },
                       child: const Icon(
                         Icons.shopping_cart,
                         size: 28,

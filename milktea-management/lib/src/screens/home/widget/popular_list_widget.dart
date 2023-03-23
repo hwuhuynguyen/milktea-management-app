@@ -24,6 +24,11 @@ class _PopularListWidgetState extends State<PopularListWidget> {
           children: [
             for (int i = 0; i < ProductService().dataProductPopular.length; i++)
               PopularProductItem(
+                  onClick: () {
+                    ProductService()
+                        .getById(ProductService().dataProductPopular[i].id);
+                    Navigator.of(context).pushNamed("/detail");
+                  },
                   product: ProductService().dataProductPopular[i]),
           ],
         ),

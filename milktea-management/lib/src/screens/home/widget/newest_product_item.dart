@@ -5,8 +5,11 @@ import 'package:ltdidong2/src/utlis/format.dart';
 
 class NewestProductItem extends StatefulWidget {
   final Product product;
+  final void Function() onClick;
 
-  const NewestProductItem({required this.product, Key? key}) : super(key: key);
+  const NewestProductItem(
+      {required this.product, required this.onClick, Key? key})
+      : super(key: key);
 
   @override
   _NewestProductItemState createState() => _NewestProductItemState();
@@ -16,22 +19,24 @@ class _NewestProductItemState extends State<NewestProductItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      child: Container(
-        height: 175,
-        width: MediaQuery.of(context).size.width - 50,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 3,
-                  blurRadius: 10,
-                  offset: const Offset(0, 3))
-            ]),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: GestureDetector(
-            onTap: () {},
+          onTap: () {
+            widget.onClick();
+          },
+          child: Container(
+            height: 175,
+            width: MediaQuery.of(context).size.width - 50,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 3,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3))
+                ]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -116,8 +121,8 @@ class _NewestProductItemState extends State<NewestProductItem> {
                   ),
                 )
               ],
-            )),
-      ),
-    );
+            ),
+          ),
+        ));
   }
 }

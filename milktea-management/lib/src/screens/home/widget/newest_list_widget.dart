@@ -23,7 +23,13 @@ class _NewestListWidgetState extends State<NewestListWidget> {
         child: Column(
           children: [
             for (int i = 0; i < ProductService().dataProductNewest.length; i++)
-              NewestProductItem(product: ProductService().dataProductNewest[i])
+              NewestProductItem(
+                  onClick: () {
+                    ProductService()
+                        .getById(ProductService().dataProductNewest[i].id);
+                    Navigator.of(context).pushNamed("/detail");
+                  },
+                  product: ProductService().dataProductNewest[i])
           ],
         ),
       ),

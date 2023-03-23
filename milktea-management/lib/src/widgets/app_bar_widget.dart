@@ -9,7 +9,9 @@ class AppBarWidget extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Scaffold.of(context).openDrawer();
+          },
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(

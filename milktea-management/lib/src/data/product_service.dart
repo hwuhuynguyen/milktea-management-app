@@ -10,9 +10,31 @@ class ProductService {
   factory ProductService() {
     return _instance;
   }
+  Product? itemSelect;
   final List<Product> dataProduct = [];
   final List<Product> dataProductNewest = [];
   final List<Product> dataProductPopular = [];
+  Future<void> getById(String? id) async {
+    dataProduct.forEach((element) {
+      if (element.id == id) {
+        itemSelect = element;
+        return;
+      }
+    });
+    dataProductNewest.forEach((element) {
+      if (element.id == id) {
+        itemSelect = element;
+        return;
+      }
+    });
+    dataProductPopular.forEach((element) {
+      if (element.id == id) {
+        itemSelect = element;
+        return;
+      }
+    });
+  }
+
   Future<void> getAll() async {
     try {
       final Response response = await HttpService()

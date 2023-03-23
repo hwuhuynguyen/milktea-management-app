@@ -22,7 +22,13 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         child: Row(
           children: [
             for (int i = 0; i < ProductService().dataProduct.length; i++)
-              ProductItem(product: ProductService().dataProduct[i]),
+              ProductItem(
+                  onClick: () {
+                    ProductService()
+                        .getById(ProductService().dataProductNewest[i].id);
+                    Navigator.of(context).pushNamed("/detail");
+                  },
+                  product: ProductService().dataProduct[i]),
           ],
         ),
       ),
