@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ltdidong2/src/config/router/route_generator.dart';
+import 'package:ltdidong2/src/data/cart/cart_bloc.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -36,20 +38,26 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: (context, child) {
-        return MediaQuery(
-          child: child!,
-          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-        );
-      },
-      theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFFF5F5F3),
-      ),
-      initialRoute: '/',
-      onGenerateRoute: _route.generateRoute,
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-    );
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => CartBloc(),
+          ),
+        ],
+        child: MaterialApp(
+          builder: (context, child) {
+            return MediaQuery(
+              child: child!,
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            );
+          },
+          theme: ThemeData(
+            scaffoldBackgroundColor: Color(0xFFF5F5F3),
+          ),
+          initialRoute: '/',
+          onGenerateRoute: _route.generateRoute,
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+        ));
   }
 }

@@ -6,9 +6,13 @@ import 'package:ltdidong2/src/utlis/format.dart';
 class NewestProductItem extends StatefulWidget {
   final Product product;
   final void Function() onClick;
+  final void Function() onPlus;
 
   const NewestProductItem(
-      {required this.product, required this.onClick, Key? key})
+      {required this.product,
+      required this.onClick,
+      required this.onPlus,
+      Key? key})
       : super(key: key);
 
   @override
@@ -107,11 +111,15 @@ class _NewestProductItemState extends State<NewestProductItem> {
                                 fontSize: 17,
                                 color: Colors.red),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: Icon(Icons.shopping_cart_outlined,
-                                size: 20, color: Colors.red),
-                          )
+                          GestureDetector(
+                              onTap: () {
+                                widget.onPlus();
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(right: 8),
+                                child: Icon(Icons.shopping_cart_outlined,
+                                    size: 20, color: Colors.red),
+                              ))
                         ],
                       ),
                       const SizedBox(

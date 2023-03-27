@@ -25,7 +25,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               ProductItem(
                   onClick: () {
                     ProductService()
-                        .getById(ProductService().dataProductNewest[i].id);
+                        .getById(ProductService().dataProduct[i].id);
                     Navigator.of(context).pushNamed("/detail");
                   },
                   product: ProductService().dataProduct[i]),

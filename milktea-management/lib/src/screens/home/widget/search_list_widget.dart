@@ -7,14 +7,14 @@ import 'package:ltdidong2/src/screens/home/widget/newest_product_item.dart';
 import 'package:ltdidong2/src/screens/home/widget/popular_product_item.dart';
 import 'package:ltdidong2/src/screens/home/widget/product_category_item.dart';
 
-class NewestListWidget extends StatefulWidget {
-  const NewestListWidget({Key? key}) : super(key: key);
+class SearchListWidget extends StatefulWidget {
+  const SearchListWidget({Key? key}) : super(key: key);
 
   @override
-  _NewestListWidgetState createState() => _NewestListWidgetState();
+  _SearchListWidgetState createState() => _SearchListWidgetState();
 }
 
-class _NewestListWidgetState extends State<NewestListWidget> {
+class _SearchListWidgetState extends State<SearchListWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -25,19 +25,17 @@ class _NewestListWidgetState extends State<NewestListWidget> {
         ),
         child: Column(
           children: [
-            for (int i = 0; i < ProductService().dataProductNewest.length; i++)
+            for (int i = 0; i < ProductService().dataSearch.length; i++)
               NewestProductItem(
                   onClick: () {
-                    ProductService()
-                        .getById(ProductService().dataProductNewest[i].id);
+                    ProductService().getById(ProductService().dataSearch[i].id);
                     Navigator.of(context).pushNamed("/detail");
                   },
                   onPlus: (() {
                     BlocProvider.of<CartBloc>(context).add(AddToCart(Cart(
-                        number: 1,
-                        product: ProductService().dataProductNewest[i])));
+                        number: 1, product: ProductService().dataSearch[i])));
                   }),
-                  product: ProductService().dataProductNewest[i])
+                  product: ProductService().dataSearch[i])
           ],
         ),
       ),

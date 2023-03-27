@@ -39,6 +39,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               color: Colors.red,
             ),
             onTap: () {
+              // Scaffold.of(context).closeDrawer();
+
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
             title: Text(

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/utlis/format.dart';
 
 class ProductBottomBar extends StatefulWidget {
-  const ProductBottomBar({Key? key}) : super(key: key);
+  final int total;
+  final void Function() onClick;
+
+  const ProductBottomBar({Key? key, required this.onClick, required this.total})
+      : super(key: key);
 
   @override
   _ProductBottomBarState createState() => _ProductBottomBarState();
@@ -17,8 +22,8 @@ class _ProductBottomBarState extends State<ProductBottomBar> {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
-            children: const [
-              Text(
+            children: [
+              const Text(
                 "Tổng cộng: ",
                 style: TextStyle(
                   fontSize: 20,
@@ -26,8 +31,8 @@ class _ProductBottomBarState extends State<ProductBottomBar> {
                 ),
               ),
               Text(
-                "600.000",
-                style: TextStyle(
+                "${FormatValidator().formatPrice(widget.total.toString())}",
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.red),
@@ -35,7 +40,9 @@ class _ProductBottomBarState extends State<ProductBottomBar> {
             ],
           ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.onClick();
+              },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

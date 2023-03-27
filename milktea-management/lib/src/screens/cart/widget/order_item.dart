@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/models/cart.dart';
+import 'package:ltdidong2/src/utlis/format.dart';
 
 class OrderItem extends StatefulWidget {
-  const OrderItem({Key? key}) : super(key: key);
+  final Cart cart;
+  final void Function() onPlus;
+  final void Function() onDecrease;
+
+  const OrderItem(
+      {Key? key,
+      required this.cart,
+      required this.onPlus,
+      required this.onDecrease})
+      : super(key: key);
 
   @override
   _OrderItemState createState() => _OrderItemState();
@@ -31,7 +42,7 @@ class _OrderItemState extends State<OrderItem> {
             Container(
                 alignment: Alignment.center,
                 child: Image.network(
-                  "https://img1.kienthucvui.vn/uploads/2020/08/26/anh-tra-sua-dep_024925777.jpg",
+                  widget.cart.product!.image!,
                   height: 80,
                   width: 140,
                 )),
@@ -40,18 +51,19 @@ class _OrderItemState extends State<OrderItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
+                children: [
                   Text(
-                    "Trà sữa siêu ngon",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    widget.cart.product!.name!,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   Text(
-                    "Trà sữa siêu ngon",
-                    style: TextStyle(fontSize: 14),
+                    widget.cart.product!.description!,
+                    style: const TextStyle(fontSize: 14),
                   ),
                   Text(
-                    "\$10",
-                    style: TextStyle(
+                    "\$ ${FormatValidator().formatPrice(widget.cart.product!.price!.toString())}",
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
                         color: Colors.red),
@@ -68,23 +80,32 @@ class _OrderItemState extends State<OrderItem> {
                       borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          widget.onPlus();
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
-                        "2",
-                        style: TextStyle(
+                        "${widget.cart.number}",
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                           color: Colors.white,
                         ),
                       ),
-                      Icon(
-                        Icons.minimize,
-                        color: Colors.white,
-                      ),
+                      GestureDetector(
+                          onTap: () {
+                            widget.onDecrease();
+                          },
+                          child: const Icon(
+                            Icons.minimize,
+                            color: Colors.white,
+                          )),
                     ],
                   ),
                 ))

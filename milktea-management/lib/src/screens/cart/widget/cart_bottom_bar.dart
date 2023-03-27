@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/utlis/format.dart';
 
 class CartBottomBar extends StatefulWidget {
-  const CartBottomBar({Key? key}) : super(key: key);
+  final int total;
+  const CartBottomBar({Key? key, required this.total}) : super(key: key);
 
   @override
   _CartBottomBarState createState() => _CartBottomBarState();
@@ -17,8 +19,8 @@ class _CartBottomBarState extends State<CartBottomBar> {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
-            children: const [
-              Text(
+            children: [
+              const Text(
                 "Tổng cộng: ",
                 style: TextStyle(
                   fontSize: 20,
@@ -26,8 +28,8 @@ class _CartBottomBarState extends State<CartBottomBar> {
                 ),
               ),
               Text(
-                "600.000",
-                style: TextStyle(
+                FormatValidator().formatPrice(widget.total.toString()),
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.red),

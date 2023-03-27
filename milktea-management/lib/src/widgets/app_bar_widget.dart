@@ -29,7 +29,9 @@ class AppBarWidget extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          },
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -43,7 +45,7 @@ class AppBarWidget extends StatelessWidget {
                     offset: const Offset(0, 3),
                   )
                 ]),
-            child: const Icon(Icons.notifications),
+            child: const Icon(Icons.home),
           ),
         )
       ]),

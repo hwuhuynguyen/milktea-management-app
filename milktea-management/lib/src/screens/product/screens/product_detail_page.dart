@@ -1,8 +1,15 @@
 import 'package:clippy_flutter/clippy_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:ltdidong2/src/data/cart/cart_bloc.dart';
+import 'package:ltdidong2/src/data/cart_service.dart';
+import 'package:ltdidong2/src/data/models/cart.dart';
+import 'package:ltdidong2/src/data/models/product.dart';
+import 'package:ltdidong2/src/data/product_service.dart';
 import 'package:ltdidong2/src/screens/cart/widget/cart_bottom_bar.dart';
 import 'package:ltdidong2/src/screens/product/widget/cart_bottom_bar.dart';
+import 'package:ltdidong2/src/utlis/format.dart';
 import 'package:ltdidong2/src/widgets/app_bar_widget.dart';
 import 'package:ltdidong2/src/widgets/drawer_widget.dart';
 
@@ -14,6 +21,9 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+  Product? itemSelect = ProductService().itemSelect;
+  int count = 1;
+  int total = ProductService().itemSelect!.price!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +39,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         padding: const EdgeInsets.all(16),
                         child: Image.network(
                           height: 300,
-                          "https://img1.kienthucvui.vn/uploads/2020/08/26/anh-tra-sua-dep_024925777.jpg",
+                          itemSelect!.image!,
                         ),
                       ),
                       Arc(
@@ -78,8 +88,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                 ),
                                               ),
                                             ),
-                                            const Text(
-                                              "600.000",
+                                            Text(
+                                              "${FormatValidator().formatPrice(itemSelect!.price!.toString())}",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,
@@ -92,9 +102,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                               vertical: 10),
                                           child: Row(
                                             children: [
-                                              const Flexible(
+                                              Flexible(
                                                   child: Text(
-                                                "Trà sữa truyền thống ",
+                                                "${itemSelect!.name}",
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
@@ -119,28 +129,50 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.center,
                                                   children: [
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 12),
-                                                      child: const Icon(
-                                                        Icons.minimize_outlined,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                    const Text(
-                                                      "1",
-                                                      style: TextStyle(
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            count = count == 0
+                                                                ? count
+                                                                : count - 1;
+                                                            total = itemSelect!
+                                                                    .price! *
+                                                                count;
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 12),
+                                                          child: const Icon(
+                                                            Icons
+                                                                .minimize_outlined,
+                                                            color: Colors.white,
+                                                          ),
+                                                        )),
+                                                    Text(
+                                                      "${count}",
+                                                      style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 15,
                                                         color: Colors.white,
                                                       ),
                                                     ),
-                                                    const Icon(
-                                                      Icons.add,
-                                                      color: Colors.white,
-                                                    )
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            count = count + 1;
+                                                            total = itemSelect!
+                                                                    .price! *
+                                                                (count);
+                                                          });
+                                                        },
+                                                        child: const Icon(
+                                                          Icons.add,
+                                                          color: Colors.white,
+                                                        )),
                                                   ],
                                                 ),
                                               )
@@ -148,8 +180,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                           ),
                                         ),
                                         const SizedBox(height: 10),
-                                        const Text(
-                                          "test thử có gì ",
+                                        Text(
+                                          "${itemSelect!.description}",
                                           style: TextStyle(fontSize: 15),
                                         ),
                                         Padding(
@@ -191,7 +223,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ])))
       ]),
       drawer: const DrawerWidget(),
-      bottomNavigationBar: const ProductBottomBar(),
+      bottomNavigationBar: ProductBottomBar(
+          total: total,
+          onClick: () {
+            if (count > 0) {
+              BlocProvider.of<CartBloc>(context)
+                  .add(AddToCart(Cart(number: count, product: itemSelect)));
+            }
+          }),
     );
   }
 }

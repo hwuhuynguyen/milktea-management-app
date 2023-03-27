@@ -12,8 +12,16 @@ class ProductService {
   }
   Product? itemSelect;
   final List<Product> dataProduct = [];
+  List<Product> dataSearch = [];
   final List<Product> dataProductNewest = [];
   final List<Product> dataProductPopular = [];
+  void searchByTitle(String title) {
+    dataSearch = dataProduct
+        .where((element) =>
+            element.name!.toLowerCase().contains(title.toLowerCase()))
+        .toList();
+  }
+
   Future<void> getById(String? id) async {
     dataProduct.forEach((element) {
       if (element.id == id) {
