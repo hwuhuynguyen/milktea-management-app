@@ -30,7 +30,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       body: ListView(children: [
         SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 0),
+                padding: const EdgeInsets.symmetric(horizontal: 0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -90,7 +90,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                             ),
                                             Text(
                                               "${FormatValidator().formatPrice(itemSelect!.price!.toString())}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,
                                               ),
@@ -107,16 +107,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                                 "${itemSelect!.name}",
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 28,
                                                 ),
                                               )),
                                               Container(
                                                 width: 80,
-                                                margin:
-                                                    EdgeInsets.only(left: 5),
-                                                padding: EdgeInsets.all(5),
+                                                margin: const EdgeInsets.only(
+                                                    left: 5),
+                                                padding:
+                                                    const EdgeInsets.all(5),
                                                 decoration: BoxDecoration(
                                                     color: Colors.red,
                                                     borderRadius:
@@ -234,3 +235,4 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 }
+// cda

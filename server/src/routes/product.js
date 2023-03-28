@@ -4,7 +4,7 @@ const ProductController = require("../controllers/ProductController.js");
 
 router.get("/", async (req, res) => {
   ProductController.getAllProduct(req, res);
-});
+}); //cda
 
 router.post("/", async (req, res) => {
   ProductController.save(req, res);

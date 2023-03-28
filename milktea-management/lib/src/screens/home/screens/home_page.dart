@@ -59,7 +59,7 @@ class _StateHomePage extends State<HomePage> {
         ? LoadingScreen()
         : KeyboardDismisser(
             child: Scaffold(
-                drawer: DrawerWidget(),
+                drawer: const DrawerWidget(),
                 floatingActionButton: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -149,15 +149,16 @@ class _StateHomePage extends State<HomePage> {
                                         setState(() {
                                           loadingSearch = true;
                                         });
-                                        if (_debounce?.isActive ?? false)
+                                        if (_debounce?.isActive ?? false) {
                                           _debounce?.cancel();
+                                        }
                                         _debounce = Timer(
                                             const Duration(milliseconds: 500),
                                             () {
                                           // do something with query
                                           searchInput = value;
                                           productService.searchByTitle(value);
-                                          if (value.length > 0) {
+                                          if (value.isNotEmpty) {
                                             setState(() {
                                               search = true;
                                               loadingSearch = false;
@@ -212,7 +213,7 @@ class _StateHomePage extends State<HomePage> {
                                       fontSize: 20),
                                 ),
                               ),
-                              CategoriesWidget(),
+                              const CategoriesWidget(),
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 child: const Text(
@@ -222,7 +223,7 @@ class _StateHomePage extends State<HomePage> {
                                       fontSize: 20),
                                 ),
                               ),
-                              PopularListWidget(),
+                              const PopularListWidget(),
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 child: const Text(
@@ -232,13 +233,14 @@ class _StateHomePage extends State<HomePage> {
                                       fontSize: 20),
                                 ),
                               ),
-                              NewestListWidget(),
+                              const NewestListWidget(),
                             ],
                           ),
-                    SizedBox(
+                    const SizedBox(
                       height: 60,
                     ),
                   ],
                 )));
   }
 }
+// cda

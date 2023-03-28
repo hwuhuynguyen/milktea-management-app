@@ -9,9 +9,8 @@ class HttpService {
   header() => {"Content-Type": "application/json"};
 
   HttpService._privateConstructor() {
-    _dio = Dio(BaseOptions(
-        baseUrl: 'https://100d-14-174-212-152.ap.ngrok.io/api/',
-        headers: header()));
+    _dio = Dio(
+        BaseOptions(baseUrl: 'https://192.168.1.16/api/', headers: header()));
     initInterceptors();
   }
 

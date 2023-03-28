@@ -17,4 +17,4 @@ ProductRepository.getNewestProduct = async () => {
 ProductRepository.getPopularProduct = async () => {
   return await ProductModel.find({ isPopular: true });
 };
-module.exports = ProductRepository;
+module.exports = ProductRepository; //cda

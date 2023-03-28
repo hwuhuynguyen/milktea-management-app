@@ -34,4 +34,4 @@ router.delete("/:id", async (req, res) => {
     CommentController.deleteComment(req, res);
 })
 
-module.exports = router;
+module.exports = router; //cda

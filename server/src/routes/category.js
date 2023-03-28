@@ -13,6 +13,6 @@ router.post("/create", async (req, res) => {
 
 router.delete("/:id",[authJwt.verifyToken,authJwt.isAdmin], async (req, res) => {
     CategoryController.delete(req, res);
-})
+}) //cda
 
 module.exports = router;
