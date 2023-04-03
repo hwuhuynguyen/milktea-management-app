@@ -3,7 +3,10 @@ import 'package:ltdidong2/src/utlis/format.dart';
 
 class CartBottomBar extends StatefulWidget {
   final int total;
-  const CartBottomBar({Key? key, required this.total}) : super(key: key);
+  final void Function() onClick;
+
+  const CartBottomBar({Key? key, required this.onClick, required this.total})
+      : super(key: key);
 
   @override
   _CartBottomBarState createState() => _CartBottomBarState();
@@ -37,7 +40,11 @@ class _CartBottomBarState extends State<CartBottomBar> {
             ],
           ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (widget.total > 0) {
+                  widget.onClick();
+                }
+              },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

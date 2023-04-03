@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:ltdidong2/src/config/https/http_service.dart';
 import 'package:ltdidong2/src/data/models/cart.dart';
 import 'package:ltdidong2/src/data/models/product.dart';
 
@@ -12,6 +14,7 @@ class CartBloc extends HydratedBloc<CartEvent, CartState> {
     on<AddToCart>(_onAddToCart);
     on<IncreaseItem>(_onIncreaseItem);
     on<DecreaseItem>(_onDecreaseItem);
+    on<OrderEvent>(_onOrderEvent);
   }
   @override
   CartState? fromJson(Map<String, dynamic> json) {
@@ -130,6 +133,32 @@ class CartBloc extends HydratedBloc<CartEvent, CartState> {
       });
       emit(state.copyWith(
           number: number, total: total, cartList: listCartResult));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _onOrderEvent(
+    OrderEvent event,
+    emit,
+  ) async {
+    try {
+      final Response response = await HttpService()
+          .request(url: "order", method: Method.POST, params: {
+        "amount": state.number,
+        "price": state.total,
+        "products": [
+          ...state.cartList.map((e) => {
+                "product": e.product!.id,
+                "amount": e.number,
+              })
+        ],
+      });
+      emit(state.copyWith(
+        cartList: [],
+        number: 0,
+        total: 0,
+      ));
     } catch (e) {
       print(e);
     }

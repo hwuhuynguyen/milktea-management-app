@@ -1,5 +1,4 @@
 const UserModel = require("../models/UserModel");
-const PostRepository = require("./PostRepository");
 const bcrypt = require("bcrypt");
 
 const UserRepository = {};

@@ -29,3 +29,10 @@ class DecreaseItem extends CartEvent {
   @override
   List<Object> get props => [id];
 }
+
+class OrderEvent extends CartEvent {
+  const OrderEvent();
+
+  @override
+  List<Object> get props => [];
+}
