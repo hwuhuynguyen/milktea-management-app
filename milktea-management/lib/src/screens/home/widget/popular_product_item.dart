@@ -49,14 +49,14 @@ class _PopularProductItemState extends State<PopularProductItem> {
                           widget.product.image ??
                               "https://hopdungthucan.com/wp-content/uploads/2022/05/hinh-anh-ly-tra-sua-tran-chau-den_062227981.jpg"),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Flexible(
                         child: Text(
                       widget.product.name!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     )),
                     const SizedBox(height: 10),
                     Flexible(
@@ -64,7 +64,7 @@ class _PopularProductItemState extends State<PopularProductItem> {
                         widget.product.description!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(fontSize: 15),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -88,3 +88,4 @@ class _PopularProductItemState extends State<PopularProductItem> {
         ));
   }
 }
+// cda
