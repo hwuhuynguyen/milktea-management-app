@@ -45,6 +45,9 @@ class ProductService {
 
   Future<void> getAll() async {
     try {
+      dataProductPopular.clear();
+      dataProduct.clear();
+      dataProductNewest.clear();
       final Response response = await HttpService()
           .request(url: "product", method: Method.GET, params: {});
       final dataProductResponse = response.data["data"]["product"] as List;

@@ -15,7 +15,7 @@ class Cart extends Equatable {
         "product": this.product!.toJson(),
       };
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
-        number: json["number"],
+        number: json["amount"],
         product: Product.fromJson(json["product"]),
       );
 }
