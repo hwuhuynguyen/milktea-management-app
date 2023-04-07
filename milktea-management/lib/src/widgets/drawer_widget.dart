@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ltdidong2/src/data/user_service.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -13,26 +14,45 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(
-              padding: EdgeInsets.zero,
-              child: UserAccountsDrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.red,
+          UserService().user != null
+              ? DrawerHeader(
+                  padding: EdgeInsets.zero,
+                  child: UserAccountsDrawerHeader(
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                    ),
+                    accountName: Text(
+                      UserService().user!.name.toString(),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    accountEmail: Text(
+                      UserService().user!.email.toString(),
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: Image.network(
+                              "https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg")
+                          .image,
+                    ),
+                  ))
+              : ListTile(
+                  leading: const Icon(
+                    Icons.login,
+                    color: Colors.red,
+                  ),
+                  onTap: () {
+                    // Scaffold.of(context).closeDrawer();
+                    Navigator.pushNamed(context, '/login');
+                  },
+                  title: const Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                accountName: const Text(
-                  "Khoa",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                accountEmail: const Text(
-                  "Khoa@gmail.com",
-                  style: TextStyle(fontSize: 16),
-                ),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: Image.network(
-                          "https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg")
-                      .image,
-                ),
-              )),
           ListTile(
             leading: const Icon(
               Icons.home,
@@ -40,10 +60,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             ),
             onTap: () {
               // Scaffold.of(context).closeDrawer();
-
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
-            title: Text(
+            title: const Text(
               "Home",
               style: TextStyle(
                 fontSize: 18,
@@ -51,71 +70,76 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
             ),
           ),
-          const ListTile(
-            leading: Icon(
-              Icons.account_box,
-              color: Colors.red,
-            ),
-            title: Text(
-              "My Account",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: Icon(
-              Icons.shopping_cart,
-              color: Colors.red,
-            ),
-            title: Text(
-              "My Orders",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: Icon(
-              Icons.favorite,
-              color: Colors.red,
-            ),
-            title: Text(
-              "My wish list",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: Icon(
-              Icons.settings,
-              color: Colors.red,
-            ),
-            title: Text(
-              "Settings",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const ListTile(
-            leading: Icon(
-              Icons.exit_to_app,
-              color: Colors.red,
-            ),
-            title: Text(
-              "Logout",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          // UserService().user != null
+          //     ? const ListTile(
+          //         leading: Icon(
+          //           Icons.account_box,
+          //           color: Colors.red,
+          //         ),
+          //         title: Text(
+          //           "My Account",
+          //           style: TextStyle(
+          //             fontSize: 18,
+          //             fontWeight: FontWeight.bold,
+          //           ),
+          //         ),
+          //       )
+          //     : Container(),
+          UserService().user != null
+              ? ListTile(
+                  leading: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.red,
+                  ),
+                  title: const Text(
+                    "Orders List",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    // Scaffold.of(context).closeDrawer();
+                    Navigator.pushNamed(context, '/orders');
+                  },
+                )
+              : ListTile(
+                  leading: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.red,
+                  ),
+                  title: const Text(
+                    "My Orders",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    // Scaffold.of(context).closeDrawer();
+                    Navigator.pushNamed(context, '/cart');
+                  },
+                ),
+          UserService().user != null
+              ? ListTile(
+                  leading: const Icon(
+                    Icons.exit_to_app,
+                    color: Colors.red,
+                  ),
+                  title: const Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    UserService().user = null;
+                    // Scaffold.of(context).closeDrawer();
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                  },
+                )
+              : Container(),
         ],
       ),
     );

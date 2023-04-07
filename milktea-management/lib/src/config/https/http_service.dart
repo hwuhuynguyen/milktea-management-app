@@ -10,7 +10,8 @@ class HttpService {
 
   HttpService._privateConstructor() {
     _dio = Dio(BaseOptions(
-        baseUrl: 'https://100d-14-174-212-152.ap.ngrok.io/api/',
+        // baseUrl: 'https://100d-14-174-212-152.ap.ngrok.io/api/',
+        baseUrl: 'http://192.168.1.16:3000/api/',
         headers: header()));
     initInterceptors();
   }

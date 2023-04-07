@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ltdidong2/src/data/cart/cart_bloc.dart';
 import 'package:ltdidong2/src/screens/cart/widget/cart_bottom_bar.dart';
@@ -6,6 +9,10 @@ import 'package:ltdidong2/src/screens/cart/widget/order_item.dart';
 import 'package:ltdidong2/src/utlis/format.dart';
 import 'package:ltdidong2/src/widgets/app_bar_widget.dart';
 import 'package:ltdidong2/src/widgets/drawer_widget.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
+import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -167,8 +174,80 @@ class _CartScreenState extends State<CartScreen> {
             ),
             drawer: const DrawerWidget(),
             bottomNavigationBar: CartBottomBar(
-              total: state.total,
-            ),
+                total: state.total,
+                onClick: (() async {
+                  var dataRegular = await rootBundle
+                      .load("assets/fonts/vietnamese/BeVietnamPro-Regular.ttf");
+                  var dataBold = await rootBundle
+                      .load("assets/fonts/vietnamese/BeVietnamPro-Bold.ttf");
+                  final ttfRegular = pw.Font.ttf(dataRegular);
+                  final ttfBold = pw.Font.ttf(dataRegular);
+                  final theme =
+                      pw.ThemeData.withFont(base: ttfRegular, bold: ttfBold);
+                  final pdf = pw.Document(theme: theme);
+                  // final netImage = await networkImage(
+                  //     'https://img5.thuthuatphanmem.vn/uploads/2022/01/13/logo-cua-hang-tra-sua_082029941.jpg');
+                  final response = await http.get(Uri.parse(
+                      'https://img5.thuthuatphanmem.vn/uploads/2022/01/13/logo-cua-hang-tra-sua_082029941.jpg'));
+
+                  final image = pw.MemoryImage(response.bodyBytes);
+                  pdf.addPage(
+                    pw.Page(
+                      margin: pw.EdgeInsets.all(30),
+                      build: (pw.Context context) {
+                        return pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.Center(
+                                child: pw.Image(
+                              image,
+                              height: 50,
+                              width: 50,
+                            )),
+                            pw.SizedBox(height: 50),
+                            pw.Center(
+                                child: pw.Text('Hoá Đơn',
+                                    style: pw.TextStyle(fontSize: 30))),
+                            pw.SizedBox(height: 20),
+                            pw.Center(
+                                child: pw.Text('Trà Sữa DUT',
+                                    style: pw.TextStyle(fontSize: 30))),
+                            pw.SizedBox(height: 20),
+                            pw.Table.fromTextArray(
+                              context: context,
+                              data: [
+                                ['Tên', 'Giá tiền', 'Số lượng'],
+                                ...state.cartList.map((e) => [
+                                      e.product!.name,
+                                      e.product!.price,
+                                      e.number
+                                    ])
+                              ],
+                            ),
+                            pw.SizedBox(height: 20),
+                            pw.Row(
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceBetween,
+                              children: [
+                                pw.Text('Tổng cộng:',
+                                    style: pw.TextStyle(
+                                        fontWeight: pw.FontWeight.bold)),
+                                pw.Text('\$${state.total}'),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                  Directory? appDocDir =
+                      Directory('/storage/emulated/0/Download');
+                  var uuid = Uuid();
+
+                  final file = File(appDocDir.path + '/' + uuid.v4() + '.pdf');
+                  await file.writeAsBytes(await pdf.save());
+                  BlocProvider.of<CartBloc>(context).add(OrderEvent());
+                })),
           );
         }));
   }

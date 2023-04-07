@@ -5,11 +5,13 @@ import 'package:ltdidong2/src/utlis/format.dart';
 class OrderItem extends StatefulWidget {
   final Cart cart;
   final void Function() onPlus;
+  final bool? disable;
   final void Function() onDecrease;
 
   const OrderItem(
       {Key? key,
       required this.cart,
+      this.disable,
       required this.onPlus,
       required this.onDecrease})
       : super(key: key);
@@ -81,15 +83,17 @@ class _OrderItemState extends State<OrderItem> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          widget.onPlus();
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ),
+                      widget.disable == null
+                          ? GestureDetector(
+                              onTap: () {
+                                widget.onPlus();
+                              },
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container(),
                       Text(
                         "${widget.cart.number}",
                         style: const TextStyle(
@@ -98,14 +102,16 @@ class _OrderItemState extends State<OrderItem> {
                           color: Colors.white,
                         ),
                       ),
-                      GestureDetector(
-                          onTap: () {
-                            widget.onDecrease();
-                          },
-                          child: const Icon(
-                            Icons.minimize,
-                            color: Colors.white,
-                          )),
+                      widget.disable == null
+                          ? GestureDetector(
+                              onTap: () {
+                                widget.onDecrease();
+                              },
+                              child: const Icon(
+                                Icons.minimize,
+                                color: Colors.white,
+                              ))
+                          : Container(),
                     ],
                   ),
                 ))

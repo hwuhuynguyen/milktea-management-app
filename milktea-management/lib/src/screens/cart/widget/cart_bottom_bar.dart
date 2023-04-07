@@ -3,7 +3,13 @@ import 'package:ltdidong2/src/utlis/format.dart';
 
 class CartBottomBar extends StatefulWidget {
   final int total;
-  const CartBottomBar({Key? key, required this.total}) : super(key: key);
+  final bool? disable;
+
+  final void Function() onClick;
+
+  const CartBottomBar(
+      {Key? key, required this.onClick, this.disable, required this.total})
+      : super(key: key);
 
   @override
   _CartBottomBarState createState() => _CartBottomBarState();
@@ -36,22 +42,29 @@ class _CartBottomBarState extends State<CartBottomBar> {
               )
             ],
           ),
-          ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                  padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 20)),
-                  backgroundColor: MaterialStateProperty.all(Colors.red)),
-              child: const Text(
-                "Đặt ngay",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ))
+          widget.disable == null
+              ? ElevatedButton(
+                  onPressed: () {
+                    if (widget.total > 0) {
+                      widget.onClick();
+                    }
+                  },
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30))),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20)),
+                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  child: const Text(
+                    "Đặt ngay",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ))
+              : Container()
         ]),
       ),
     );
