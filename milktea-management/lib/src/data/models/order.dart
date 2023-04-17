@@ -11,12 +11,14 @@ class OrderObject extends Equatable {
   const OrderObject(
       {this.price, this.amount, this.id, this.cartList = const []});
   factory OrderObject.fromJson(Map<String, dynamic> json) {
+    print(json);
     List<Cart> ListCart = [];
     if (json["products"] != null) {
       List listHistories = json["products"] as List;
 
       listHistories.forEach((element) {
-        if (element['product']['name'] != null) {
+        print(element);
+        if (element['product'] is! String) {
           Cart data = Cart.fromJson(element);
           ListCart.add(data);
         }
