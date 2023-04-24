@@ -30,7 +30,7 @@ UserRepository.updateUser = async (id, payload) => {
 
 UserRepository.sortDelete = async (id) => {
   const user = await UserModel.findById(id);
-  const listPost = await PostRepository.DeleteAllPostByUserID(
+  await PostRepository.DeleteAllPostByUserID(
     id,
     user.isDelete,
   );
